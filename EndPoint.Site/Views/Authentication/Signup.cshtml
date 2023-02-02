@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewData["Title"] = "ثبت نام";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- top header wrapper start -->
+<div class="page_title_section">
+
+    <div class="page_header">
+        <div class="container">
+            <div class="row">
+                <!-- section_heading start -->
+                <div class="col-lg-9 col-md-8 col-12 col-sm-7">
+
+                    <h1>ثبت نام</h1>
+                </div>
+                <div class="col-lg-3 col-md-4 col-12 col-sm-5">
+                    <div class="sub_title_section">
+                        <ul class="sub_title">
+                            <li> <a href="#"> خانه </a>&nbsp; / &nbsp; </li>
+                            <li>ثبت نام</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- top header wrapper end -->
+<!-- sign up wrapper start -->
+<div class="login_wrapper jb_cover">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="login_top_box jb_cover">
+                    <div class="login_banner_wrapper">
+                        <img src="images/logo.png" alt="logo">
+                        <div class="header_btn search_btn facebook_wrap jb_cover">
+
+                            <a href="#">ورود با فیسبوک <i class="fab fa-facebook-f"></i></a>
+
+                        </div>
+                        <div class="header_btn search_btn google_wrap jb_cover">
+
+                            <a href="#">ورود با پینترست <i class="fab fa-pinterest-p"></i></a>
+
+                        </div>
+                        <div class="jp_regis_center_tag_wrapper jb_register_red_or">
+                            <h1>یا</h1>
+                        </div>
+                    </div>
+                    <div class="login_form_wrapper signup_wrapper">
+                        <h2>ثبت نام</h2>
+                        <div class="form-group icon_form comments_form">
+
+                            <input type="text" class="form-control" id="FullName" placeholder="نام کامل*">
+
+                        </div>
+                        <div class="form-group icon_form comments_form">
+
+                            <input type="email" class="form-control" id="Email" placeholder="ایمیل*">
+                        </div>
+                        <div class="form-group icon_form comments_form">
+
+                            <input type="password" class="form-control" id="Password" placeholder="رمز عبور*">
+                        </div>
+                        <div class="form-group icon_form comments_form">
+                       
+                            <input type="password" class="form-control" id="RePassword" placeholder="تکرار رمز عبور*">
+                        </div>
+                        <div class="login_remember_box">
+                            <label class="control control--checkbox">
+                                مرا به خاطر بسپار
+                                <input type="checkbox">
+                                <span class="control__indicator"></span>
+                            </label>
+                            <a href="#" class="forget_password">
+                                فراموشی رمزعبور
+                            </a>
+                        </div>
+                        <div class="header_btn search_btn login_btn jb_cover">
+
+                            <a onclick="Registeruser()" class="btn btn-primary btn-register">ثبت نام</a>
+
+                        </div>
+                        <div class="dont_have_account jb_cover">
+                            <p>حساب کاربری دارید؟ <a href="Authentication/Signin">ورود</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- sign up wrapper end -->
+
+<link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+
+<script>
+    function Registeruser() {
+ 
+        var FullName = $("#FullName").val();
+        var Email = $("#Email").val();
+        var Password = $("#Password").val();
+        var RePassword = $("#RePassword").val();
+
+        var postData = {
+            'FullName': FullName,
+            'Email': Email,
+            'Password': Password,
+            'RePassword': RePassword,
+        };
+
+        $.ajax({
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            type: "POST",
+            url: "Signup",
+            data: postData,
+            success: function (data) {
+                if (data.isSuccess == true) {
+                    swal.fire(
+                        'موفق!',
+                        data.message,
+                        'success'
+                    ).then(function (isConfirm) {
+                        window.location.replace("/");
+                    });
+                }
+                else {
+
+                    swal.fire(
+                        'هشدار!',
+                        data.message,
+                        'warning'
+                    );
+                }
+            },
+            error: function (request, status, error) {
+                swal.fire(
+                    'هشدار!',
+                    request.responseText,
+                    'warning'
+                );
+            }
+        });
+    }
+</script>
+
+
+
+
+
